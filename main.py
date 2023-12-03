@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 import pandas as pd
+import asyncio
 
 app = FastAPI()
 
@@ -42,27 +43,29 @@ def dataPrediction(country, ano):
 
 @app.get("/")
 async def root():
-    model = await load('model_decisionTreeRegressorV2.joblib')
+    model = load('model_decisionTreeRegressorV2.joblib')
+    await asyncio.sleep(1)
     model_response = model.predict(dataPrediction('COL', 2050))
     resultados = pd.DataFrame({'Tipo de Cancer': listaTipeCancerUnic, 'Probabilidad de Mortalidad': model_response})
     return {"message": resultados.to_json()}
 
 @app.post("/predict")
 async def predict(item: Item):
-    model = await load('model_decisionTreeRegressorV2.joblib')
+    model = load('model_decisionTreeRegressorV2.joblib')
+    await asyncio.sleep(1)
     model_response = model.predict(dataPrediction(item.country, item.ano))
     resultados = pd.DataFrame({'Tipo de Cancer': listaTipeCancerUnic, 'Probabilidad de Mortalidad': model_response})
     return {"message": resultados.to_json()}
 
 @app.get("/test")
 async def root():
-    model = await load('model_LinearRegression.joblib')
+    model = load('model_LinearRegression.joblib')
     model_response = model.predict([[4988.705582, 985.881631]])
     return {"message": model_response.tolist()}
 
 @app.post("/predictB")
 async def predict(itemRL: ItemRL):
-    model = await load('model_LinearRegression.joblib')
+    model = load('model_LinearRegression.joblib')
     data = [
         itemRL.ano,
         itemRL.country
