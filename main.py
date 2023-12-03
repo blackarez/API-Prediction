@@ -42,14 +42,14 @@ def dataPrediction(country, ano):
 
 @app.get("/")
 async def root():
-    model = load('model_decisionTreeRegressor-V2.joblib')
+    model = load('model_decisionTreeRegressorV2.joblib')
     model_response = model.predict(dataPrediction('COL', 2050))
     resultados = pd.DataFrame({'Tipo de Cancer': listaTipeCancerUnic, 'Probabilidad de Mortalidad': model_response})
     return {"message": resultados.to_json()}
 
 @app.post("/predict")
 def predict(item: Item):
-    model = load('model_decisionTreeRegressor-V2.joblib')
+    model = load('model_decisionTreeRegressorV2.joblib')
     model_response = model.predict(dataPrediction(item.country, item.ano))
     resultados = pd.DataFrame({'Tipo de Cancer': listaTipeCancerUnic, 'Probabilidad de Mortalidad': model_response})
     return {"message": resultados.to_json()}
