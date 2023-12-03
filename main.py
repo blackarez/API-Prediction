@@ -23,7 +23,7 @@ app.add_middleware(
 
 class Item(BaseModel):
     ano: int
-    country: string
+    country: str
 
 
 class ItemRL(BaseModel):
