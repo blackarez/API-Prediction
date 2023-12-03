@@ -42,27 +42,27 @@ def dataPrediction(country, ano):
 
 @app.get("/")
 async def root():
-    model = load('model_decisionTreeRegressorV2.joblib')
+    model = await load('model_decisionTreeRegressorV2.joblib')
     model_response = model.predict(dataPrediction('COL', 2050))
     resultados = pd.DataFrame({'Tipo de Cancer': listaTipeCancerUnic, 'Probabilidad de Mortalidad': model_response})
     return {"message": resultados.to_json()}
 
 @app.post("/predict")
-def predict(item: Item):
-    model = load('model_decisionTreeRegressorV2.joblib')
+async def predict(item: Item):
+    model = await load('model_decisionTreeRegressorV2.joblib')
     model_response = model.predict(dataPrediction(item.country, item.ano))
     resultados = pd.DataFrame({'Tipo de Cancer': listaTipeCancerUnic, 'Probabilidad de Mortalidad': model_response})
     return {"message": resultados.to_json()}
 
 @app.get("/test")
 async def root():
-    model = load('model_LinearRegression.joblib')
+    model = await load('model_LinearRegression.joblib')
     model_response = model.predict([[4988.705582, 985.881631]])
     return {"message": model_response.tolist()}
 
 @app.post("/predictB")
-def predict(itemRL: ItemRL):
-    model = load('model_LinearRegression.joblib')
+async def predict(itemRL: ItemRL):
+    model = await load('model_LinearRegression.joblib')
     data = [
         itemRL.ano,
         itemRL.country
