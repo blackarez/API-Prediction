@@ -11,7 +11,7 @@ app = FastAPI()
 # Configuración CORS para permitir solicitudes desde tu aplicación web (ajusta según sea necesario)
 origins = [
     "http://localhost",  # Reemplaza tu_puerto_de_desarrollo con el puerto real
-    "https://parcialfinal-ac38b.web.app/",  # Agrega aquí el dominio de tu aplicación en producción
+    "https://parcialfinal-ac38b.web.app",  # Agrega aquí el dominio de tu aplicación en producción
 ]
 
 app.add_middleware(
